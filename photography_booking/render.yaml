@@ -2,6 +2,7 @@ services:
   - type: web
     name: photography-booking
     env: python
+    rootDir: photography_booking
     buildCommand: "pip install -r requirements.txt"
     startCommand: "gunicorn app:app"
     plan: free
