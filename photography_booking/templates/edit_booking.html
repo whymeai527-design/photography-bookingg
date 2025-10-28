@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kemaskini Tempahan</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background: #f8f9fa;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 550px;
+      background: white;
+      margin: auto;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    label {
+      font-weight: 600;
+      margin-top: 10px;
+      display: block;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      margin-top: 6px;
+      margin-bottom: 15px;
+      font-size: 15px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #28a745;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #218838;
+    }
+    a {
+      text-decoration: none;
+      display: block;
+      margin-top: 10px;
+      text-align: center;
+      color: #555;
+    }
+    a:hover { color: #000; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>✏️ Kemaskini Tempahan</h2>
+
+    <form action="" method="POST">
+      <label for="nama">Nama Penuh</label>
+      <input type="text" name="nama" id="nama" value="{{ booking['nama'] }}" required>
+
+      <label for="phone">Nombor Telefon</label>
+      <input type="text" name="phone" id="phone" value="{{ booking['phone'] }}" required>
+
+      <label for="tarikh">Tarikh Tempahan</label>
+      <input type="text" id="tarikh" name="tarikh" value="{{ booking['tarikh'] }}" required>
+
+      <label for="pakej">Pilih Pakej</label>
+      <select name="pakej" id="pakej" required>
+        {% for p in pakej_list %}
+          <option value="{{ p['nama'] }}" {% if p['nama'] == booking['pakej'] %}selected{% endif %}>
+            {{ p['nama'] }} (RM{{ "%.2f"|format(p['harga']) }})
+          </option>
+        {% endfor %}
+      </select>
+
+      <label for="note">Catatan / Permintaan Tambahan</label>
+      <textarea name="note" id="note" rows="3">{{ booking['note'] }}</textarea>
+
+      <button type="submit">💾 Simpan Perubahan</button>
+    </form>
+
+    <a href="{{ url_for('bookings') }}">⬅️ Kembali ke Senarai Tempahan</a>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script>
+    flatpickr("#tarikh", {
+      dateFormat: "Y-m-d",
+      minDate: "today"
+    });
+  </script>
+</body>
+</html>
